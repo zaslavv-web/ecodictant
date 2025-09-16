@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Экодиктант</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+    <div id="main-container">
+        <div class="header">
+            <img src="ecotalk_logo.png" alt="Экотолк Logo" class="logo">
+        </div>
+        <div class="welcome" id="welcome">
+        </div>
+        <div class="language-options-container">
+            <div class="language-options">
+                <div class="card" data-lang="ru">
+                    <img src="unnamed (1).png" alt="RU Flag and People" class="lang-image">
+                    <button id="lang-ru-button" class="button">ЗАРЕГИСТРИРОВАТЬСЯ</button>
+                </div>
+                <div class="card" data-lang="zh">
+                    <img src="unnamed (2).png" alt="ZH Flag and People" class="lang-image">
+                    <button id="lang-zh-button" class="button">注册账号</button>
+                </div>
+                <div class="card" data-lang="ar">
+                    <img src="unnamed (3).png" alt="AR Flag and People" class="lang-image">
+                    <button id="lang-ar-button" class="button">تسجيل</button>
+                </div>
+                <div class="card" data-lang="en">
+                    <img src="unnamed.png" alt="EN Flag and People" class="lang-image">
+                    <button id="lang-en-button" class="button">SIGN IN</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="role-modal" class="modal">
+        <div class="modal-content role-modal-content">
+            <span class="close" id="role-modal-close-btn">&times;</span>
+            <div class="modal-header">
+                <h2 id="role-welcome-text">ТЕПЕРЬ ДАВАЙТЕ ОПРЕДЕЛИМ, КАКУЮ РОЛЬ ВЫ ХОТИТЕ ЗАНЯТЬ В НАШЕМ ПРОЕКТЕ</h2>
+            </div>
+            <div class="modal-body">
+                <div class="role-options">
+                    <div class="role-option" id="role-curator-btn">
+                        <img src="kurator.png" alt="Curator">
+                        <span id="curator-label">КУРАТОР</span>
+                    </div>
+                    <div class="role-option" id="role-volunteer-btn">
+                        <img src="volunter.png" alt="Volunteer">
+                        <span id="volunteer-label">ВОЛОНТЕР</span>
+                    </div>
+                    <div class="role-option" id="role-participant-btn">
+                        <img src="student.png" alt="Participant">
+                        <span id="participant-label">УЧАСТНИК</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="registration-modal" class="modal">
+        <div class="modal-content registration-modal-content">
+            <span class="close" id="registration-modal-close-btn">&times;</span>
+            <div class="modal-header">
+                <h2 id="registration-title">РЕГИСТРАЦИЯ</h2>
+            </div>
+            <div class="modal-body">
+                <form id="registration-form">
+                    <div class="form-group">
+                        <label for="name" id="name-label">Имя *</label>
+                        <input type="text" id="name" required>
+                        <div class="error-message" id="name-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="surname" id="surname-label">Фамилия *</label>
+                        <input type="text" id="surname" required>
+                        <div class="error-message" id="surname-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="birthdate" id="birthdate-label">Дата рождения *</label>
+                        <input type="text" id="birthdate" required>
+                        <div class="error-message" id="birthdate-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" id="phone-label">Телефон *</label>
+                        <input type="tel" id="phone" required>
+                        <div class="error-message" id="phone-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="messenger" id="messenger-label">Мессенджер</label>
+                        <input type="text" id="messenger" placeholder="Например: Telegram, WhatsApp и т.д.">
+                    </div>
+                    <div class="form-group" id="curator-code-group" style="display: none;">
+                        <label for="secretCode" id="secret-code-label">Секретный код</label>
+                        <input type="text" id="secretCode" maxlength="4" placeholder="Введите код">
+                        <div class="error-message" id="secret-code-error"></div>
+                    </div>
+                    <button type="button" class="submit-button" id="register-button">ЗАРЕГИСТРИРОВАТЬСЯ</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="locals.js"></script>
+    <script src="curators.js"></script>
+    <script src="volunteers.js"></script>
+    <script src="students.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ru.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/zh.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/default.js"></script>
+
+    <script>
+        let currentLang = 'ru';
+        let currentRole = '';
+        let datePickerInstance;
+
+        function setLanguage(lang) {
+            document.documentElement.lang = lang;
+            document.documentElement.dir = translations[lang].dir || 'ltr';
+            document.getElementById('welcome').innerHTML = translations[lang].welcome;
+            document.getElementById('role-welcome-text').textContent = translations[lang].role_welcome;
+            document.getElementById('curator-label').textContent = translations[lang].curator;
+            document.getElementById('volunteer-label').textContent = translations[lang].volunteer;
+            document.getElementById('participant-label').textContent = translations[lang].participant;
+            document.getElementById('registration-title').textContent = translations[lang].registration_title;
+            document.getElementById('name-label').textContent = translations[lang].name + ' *';
+            document.getElementById('surname-label').textContent = translations[lang].surname + ' *';
+            document.getElementById('birthdate-label').textContent = translations[lang].birthdate + ' *';
+            document.getElementById('phone-label').textContent = translations[lang].phone + ' *';
+            document.getElementById('messenger-label').textContent = translations[lang].messenger;
+            document.getElementById('secret-code-label').textContent = translations[lang].secret_code;
+            document.getElementById('register-button').textContent = translations[lang].register_button;
+
+            // Обновляем язык flatpickr
+            const localeMap = {
+                'ru': 'ru',
+                'zh': 'zh',
+                'ar': 'ar',
+                'en': 'default'
+            };
+
+            if (datePickerInstance) {
+                datePickerInstance.set('locale', localeMap[lang]);
+            }
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function selectLanguage(lang) {
+            currentLang = lang;
+            setLanguage(lang);
+            document.getElementById('role-modal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function selectRole(role) {
+            currentRole = role;
+            document.getElementById('role-modal').style.display = 'none';
+            document.getElementById('registration-modal').style.display = 'block';
+            document.getElementById('curator-code-group').style.display = currentRole === 'curator' ? 'block' : 'none';
+            setLanguage(currentLang);
+        }
+
+        function validateName(input) {
+            const errorElement = document.getElementById(input.id + '-error');
+            const value = input.value.trim();
+            if (value === '') {
+                errorElement.textContent = translations[currentLang].fill_required;
+                input.classList.add('invalid');
+                return false;
+            } else if (!/^[a-zA-Zа-яА-ЯёЁ\s\-]+$/.test(value)) {
+                errorElement.textContent = translations[currentLang].name_error;
+                input.classList.add('invalid');
+                return false;
+            } else {
+                errorElement.textContent = '';
+                input.classList.remove('invalid');
+                return true;
+            }
+        }
+
+        function validateBirthdate(input) {
+            const errorElement = document.getElementById('birthdate-error');
+            const birthdate = new Date(input.value);
+            const maxDate = new Date('2020-12-31');
+            const minDate = new Date('1900-01-01');
+            if (input.value === '') {
+                errorElement.textContent = translations[currentLang].fill_required;
+                input.classList.add('invalid');
+                return false;
+            } else if (birthdate > maxDate || birthdate < minDate) {
+                errorElement.textContent = translations[currentLang].birthdate_range_error;
+                input.classList.add('invalid');
+                return false;
+            } else {
+                errorElement.textContent = '';
+                input.classList.remove('invalid');
+                return true;
+            }
+        }
+
+        function validatePhone(input) {
+            const errorElement = document.getElementById('phone-error');
+            const value = input.value.trim();
+            if (value === '') {
+                errorElement.textContent = translations[currentLang].fill_required;
+                input.classList.add('invalid');
+                return false;
+            } else if (!/^\+?[\d\s\(\)\-]{10,15}$/.test(value)) {
+                errorElement.textContent = translations[currentLang].invalid_phone;
+                input.classList.add('invalid');
+                return false;
+            } else {
+                errorElement.textContent = '';
+                input.classList.remove('invalid');
+                return true;
+            }
+        }
+
+        function registerUser() {
+            let isValid = true;
+            isValid = validateName(document.getElementById('name')) && isValid;
+            isValid = validateName(document.getElementById('surname')) && isValid;
+            isValid = validateBirthdate(document.getElementById('birthdate')) && isValid;
+            isValid = validatePhone(document.getElementById('phone')) && isValid;
+
+            if (!isValid) return;
+
+            const name = document.getElementById('name').value.trim();
+            const surname = document.getElementById('surname').value.trim();
+            const birthdate = document.getElementById('birthdate').value;
+            const phone = document.getElementById('phone').value.trim();
+            const messenger = document.getElementById('messenger').value.trim();
+            const secretCode = document.getElementById('secretCode').value.trim();
+
+            const user = { name, surname, birthdate, phone, messenger, lang: currentLang };
+
+            const birthYear = new Date(birthdate).getFullYear();
+            const currentYear = new Date().getFullYear();
+            const isAdult = (currentYear - birthYear) >= 18;
+
+            if (currentRole === 'curator') {
+                const existingCurator = curators.find(c => c.code === secretCode);
+                if (existingCurator) {
+                    localStorage.setItem('currentUser', JSON.stringify({ role: 'curator', status: 'ready', data: user }));
+                    window.location.href = 'kurator_ready.html';
+                } else if (secretCode === '') {
+                     localStorage.setItem('currentUser', JSON.stringify({ role: 'curator', status: 'waiting', data: user }));
+                     window.location.href = 'kurator_waiting.html';
+                } else {
+                    document.getElementById('secret-code-error').textContent = translations[currentLang].invalid_code;
+                    document.getElementById('secretCode').classList.add('invalid');
+                }
+            } else if (currentRole === 'volunteer') {
+                volunteers.push(user);
+                localStorage.setItem('currentUser', JSON.stringify({ role: 'volunteer', data: user }));
+                window.location.href = 'volunteer.html';
+            } else if (currentRole === 'participant') {
+                if (isAdult) {
+                    students.push(user);
+                    localStorage.setItem('currentUser', JSON.stringify({ role: 'student', age: 'adult', data: user }));
+                    window.location.href = 'student_adult.html';
+                } else {
+                    students.push(user);
+                    localStorage.setItem('currentUser', JSON.stringify({ role: 'student', age: 'child', data: user }));
+                    window.location.href = 'student_child.html';
+                }
+            }
+        }
+
+        function initEventListeners() {
+            document.getElementById('lang-ru-button').addEventListener('click', () => selectLanguage('ru'));
+            document.getElementById('lang-zh-button').addEventListener('click', () => selectLanguage('zh'));
+            document.getElementById('lang-ar-button').addEventListener('click', () => selectLanguage('ar'));
+            document.getElementById('lang-en-button').addEventListener('click', () => selectLanguage('en'));
+            document.getElementById('role-modal-close-btn').addEventListener('click', () => closeModal('role-modal'));
+            document.getElementById('registration-modal-close-btn').addEventListener('click', () => closeModal('registration-modal'));
+            document.getElementById('role-curator-btn').addEventListener('click', () => selectRole('curator'));
+            document.getElementById('role-volunteer-btn').addEventListener('click', () => selectRole('volunteer'));
+            document.getElementById('role-participant-btn').addEventListener('click', () => selectRole('participant'));
+            document.getElementById('register-button').addEventListener('click', registerUser);
+            document.getElementById('name').addEventListener('input', () => validateName(document.getElementById('name')));
+            document.getElementById('surname').addEventListener('input', () => validateName(document.getElementById('surname')));
+            document.getElementById('birthdate').addEventListener('change', () => validateBirthdate(document.getElementById('birthdate')));
+            document.getElementById('phone').addEventListener('input', () => validatePhone(document.getElementById('phone')));
+        }
+
+        window.onload = function() {
+            // Инициализируем flatpickr
+            datePickerInstance = flatpickr("#birthdate", {
+                dateFormat: "Y-m-d",
+                locale: "ru"
+            });
+            setLanguage('ru');
+            document.querySelectorAll('.lang-image').forEach(img => {
+                img.addEventListener('mouseover', () => {
+                    const lang = img.parentElement.dataset.lang;
+                    document.getElementById('welcome').innerHTML = translations[lang].welcome;
+                });
+                img.addEventListener('mouseout', () => {
+                    document.getElementById('welcome').innerHTML = translations['ru'].welcome;
+                });
+            });
+            document.getElementById('role-modal').addEventListener('click', function(event) {
+                if (event.target === this) {
+                    closeModal('role-modal');
+                }
+            });
+            document.getElementById('registration-modal').addEventListener('click', function(event) {
+                if (event.target === this) {
+                    closeModal('registration-modal');
+                }
+            });
+            initEventListeners();
+        };
+    </script>
+</body>
+</html>

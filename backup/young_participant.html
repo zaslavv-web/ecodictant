@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Экодиктант - Молодой Участник</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header">
+        <img src="ecotalk_logo.png" alt="Экотолк Logo" class="logo">
+    </div>
+    <div class="content">
+        <h2 id="page-title"></h2>
+        <!-- Content for young participant -->
+        <p id="content-message"></p>
+    </div>
+    <script src="locals.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const lang = urlParams.get('lang') || 'ru';
+        setLanguage(lang);
+        document.getElementById('page-title').textContent = translations[lang].young_participant_title || 'Молодой Участник';
+        document.getElementById('content-message').textContent = translations[lang].young_participant_content || 'Content for young participant dictation.';
+    </script>
+</body>
+</html>

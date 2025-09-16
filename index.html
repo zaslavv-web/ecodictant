@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Экодиктант</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header">
+        <img src="ecotalk_logo.png" alt="Экотолк Logo" class="logo">
+    </div>
+    <div class="welcome" id="welcome">
+        </div>
+    <div class="language-options-container">
+        <div class="language-options">
+            <div class="card" data-lang="ru">
+                <img src="unnamed (1).png" alt="RU Flag and People" class="lang-image">
+                <button onclick="selectLanguage('ru')" class="button">ЗАРЕГИСТРИРОВАТЬСЯ</button>
+            </div>
+            <div class="card" data-lang="zh">
+                <img src="unnamed (2).png" alt="ZH Flag and People" class="lang-image">
+                <button onclick="selectLanguage('zh')" class="button">注册账号</button>
+            </div>
+            <div class="card" data-lang="ar">
+                <img src="unnamed (3).png" alt="AR Flag and People" class="lang-image">
+                <button onclick="selectLanguage('ar')" class="button">تسجيل</button>
+            </div>
+            <div class="card" data-lang="en">
+                <img src="unnamed (4).png" alt="EN Flag and People" class="lang-image">
+                <button onclick="selectLanguage('en')" class="button">SIGN IN</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="role-modal" class="modal">
+        <div class="modal-content role-modal-content">
+            <span class="close" onclick="closeModal('role-modal')">&times;</span>
+            <div class="modal-header">
+                <h2 id="role-welcome-text">ТЕПЕРЬ ДАВАЙТЕ ОПРЕДЕЛИМ, КАКУЮ РОЛЬ ВЫ ХОТИТЕ ЗАНЯТЬ В НАШЕМ ПРОЕКТЕ</h2>
+            </div>
+            <div class="modal-body">
+                <div class="role-options">
+                    <div class="role-option" onclick="selectRole('curator')">
+                        <img src="kurator.png" alt="Curator">
+                        <span id="curator-label">КУРАТОР</span>
+                    </div>
+                    <div class="role-option" onclick="selectRole('volunteer')">
+                        <img src="volunter.png" alt="Volunteer">
+                        <span id="volunteer-label">ВОЛОНТЕР</span>
+                    </div>
+                    <div class="role-option" onclick="selectRole('participant')">
+                        <img src="student.png" alt="Participant">
+                        <span id="participant-label">УЧАСТНИК</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="registration-modal" class="modal">
+        <div class="modal-content registration-modal-content">
+            <span class="close" onclick="closeModal('registration-modal')">&times;</span>
+            <div class="modal-header">
+                <h2 id="registration-title">РЕГИСТРАЦИЯ</h2>
+            </div>
+            <div class="modal-body">
+                <form id="registration-form">
+                    <div class="form-group">
+                        <label for="name" id="name-label">Имя *</label>
+                        <input type="text" id="name" required oninput="validateName(this)">
+                        <div class="error-message" id="name-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="surname" id="surname-label">Фамилия *</label>
+                        <input type="text" id="surname" required oninput="validateName(this)">
+                        <div class="error-message" id="surname-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="birthdate" id="birthdate-label">Дата рождения *</label>
+                        <input type="date" id="birthdate" required max="2020-12-31" onchange="validateBirthdate(this)">
+                        <div class="error-message" id="birthdate-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" id="phone-label">Телефон *</label>
+                        <input type="tel" id="phone" required oninput="validatePhone(this)">
+                        <div class="error-message" id="phone-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="messenger" id="messenger-label">Мессенджер</label>
+                        <input type="text" id="messenger" placeholder="Например: Telegram, WhatsApp и т.д.">
+                    </div>
+                    <div class="form-group" id="curator-code-group" style="display: none;">
+                        <label for="secretCode" id="secret-code-label">Секретный код</label>
+                        <input type="text" id="secretCode" maxlength="4" placeholder="Введите код">
+                        <div class="error-message" id="secret-code-error"></div>
+                    </div>
+                    <button type="button" class="submit-button" id="register-button" onclick="registerUser()">ЗАРЕГИСТРИРОВАТЬСЯ</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-box" id="dashboard-box" style="display: none;">
+        <h2 id="dashboard-title"></h2>
+        <p id="welcome-user"></p>
+        <div id="participant-section" style="display: none;">
+            <p id="dictant-message"></p>
+            <button class="action-button" id="start-dictant"></button>
+        </div>
+        <div id="volunteer-section" style="display: none;">
+            <p id="volunteer-message"></p>
+            <button class="action-button" id="organize-event"></button>
+        </div>
+        <div id="curator-section" style="display: none;">
+            <p id="curator-message"></p>
+            <button class="action-button" id="manage-platform"></button>
+        </div>
+    </div>
+
+    <div class="dashboard-box" id="curator-wait-screen" style="display: none;">
+        <img src="hello.jpg" alt="Acorn Character" style="width: 150px; margin-bottom: 20px;">
+        <p id="curator-wait-message"></p>
+        <div class="form-group">
+            <label for="validationCode" id="validation-code-label" style="display: none;"></label>
+            <input type="text" id="validationCode" maxlength="4" style="width: 100px; text-align: center; display: none;">
+        </div>
+        <div class="error-message" id="validation-code-error"></div>
+        <button type="button" class="submit-button" id="validate-button" onclick="validateSecretCode()" style="display: none;"></button>
+    </div>
+
+    <script src="locals.js"></script>
+    <script>
+        let currentLang = 'ru';
+        let currentRole = '';
+
+        function selectLanguage(lang) {
+            currentLang = lang;
+            setLanguage(lang);
+            // Показываем модальное окно выбора роли
+            document.getElementById('role-modal').style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Запрещаем прокрутку фонового контента
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none
