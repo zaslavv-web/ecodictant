@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет - Экодиктант</title>
+    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+    <div id="profile-dashboard" class="profile-dashboard">
+        <span class="close" id="profile-dashboard-close-btn">&times;</span>
+        <h2 id="profile-title">Личный кабинет</h2>
+        <div class="profile-layout">
+            <div class="password-column">
+                <div class="password-group">
+                    <label for="current-password" id="current-password-label">Текущий пароль:</label>
+                    <input type="password" id="current-password" class="profile-field" readonly value="********">
+                </div>
+                <button class="action-button" id="change-password-btn">Сменить пароль</button>
+            </div>
+            <div class="profile-data-column">
+                <div class="profile-group">
+                    <label for="profile-name" id="profile-name-label">Имя:</label>
+                    <input type="text" id="profile-name" class="profile-field" readonly>
+                </div>
+                <div class="profile-group">
+                    <label for="profile-surname" id="profile-surname-label">Фамилия:</label>
+                    <input type="text" id="profile-surname" class="profile-field" readonly>
+                </div>
+                <div class="profile-group">
+                    <label for="profile-birthdate" id="profile-birthdate-label">Дата рождения:</label>
+                    <input type="text" id="profile-birthdate" class="profile-field" readonly>
+                </div>
+                <div class="profile-group">
+                    <label for="profile-phone" id="profile-phone-label">Телефон:</label>
+                    <input type="tel" id="profile-phone" class="profile-field" readonly>
+                </div>
+                <div class="profile-group">
+                    <label for="profile-email" id="profile-email-label">Электронная почта:</label>
+                    <input type="email" id="profile-email" class="profile-field" readonly>
+                </div>
+                <div class="profile-group">
+                    <label for="profile-messenger" id="profile-messenger-label">Мессенджер:</label>
+                    <input type="text" id="profile-messenger" class="profile-field" readonly>
+                </div>
+            </div>
+            <div class="curator-column" id="curator-column" style="display: none;">
+                <div id="curator-materials" style="display: none;">
+                    <h3 id="curator-materials-title">Материалы для куратора</h3>
+                    <ul>
+                        <li><a href="#" class="download-link" id="curator-platform-rules">правила оформления площадки</a></li>
+                        <li><a href="#" class="download-link" id="curator-print-materials">материалы для печати</a></li>
+                        <li><a href="#" class="download-link" id="curator-distribution-materials">материалы для раздачи</a></li>
+                        <li><a href="#" class="download-link" id="curator-questions">вопросы экодиктанта этого года</a></li>
+                        <li><a href="#" class="download-link" id="curator-answers">правильные ответы на вопросы к диктанту</a></li>
+                        <li><a href="#" class="download-link" id="curator-volunteer-rules">правила привлечения волонтеров</a></li>
+                        <li><a href="#" class="download-link" id="curator-certificate-participant">шаблон сертификата участника</a></li>
+                        <li><a href="#" class="download-link" id="curator-certificate-winner">шаблон сертификата победителя площадки</a></li>
+                        <li><a href="#" class="download-link" id="curator-certificate-success">шаблон участника, который прошел диктант с положительным результатом</a></li>
+                    </ul>
+                </div>
+                <div id="curator-platform-form" style="display: none;">
+                    <h3 id="curator-thanks">Большое спасибо за Ваше желание развивать ЭкоДиктант</h3>
+                    <p id="curator-platform-info">Укажите пожалуйста информацию о Вашей площадке:</p>
+                    <form id="platform-form">
+                        <div class="form-group">
+                            <label for="country" id="curator-country">Страна *</label>
+                            <input type="text" id="country" required>
+                            <div class="error-message" id="country-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="city" id="curator-city">Город (населенный пункт) *</label>
+                            <input type="text" id="city" required>
+                            <div class="error-message" id="city-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="attendance" id="curator-attendance">Планируемая посещаемость площадки в дни проведения ЭкоДиктанта *</label>
+                            <input type="number" id="attendance" required>
+                            <div class="error-message" id="attendance-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="volunteers" id="curator-volunteers">планируемая численность привлекаемых волонтеров *</label>
+                            <input type="number" id="volunteers" required>
+                            <div class="error-message" id="volunteers-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-person" id="curator-contact-person">Контактное лицо *</label>
+                            <input type="text" id="contact-person" required>
+                            <div class="error-message" id="contact-person-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-phone" id="curator-contact-phone">контактный телефон *</label>
+                            <input type="tel" id="contact-phone" required>
+                            <div class="error-message" id="contact-phone-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-email" id="curator-contact-email">контактная электронная почта *</label>
+                            <input type="email" id="contact-email" required>
+                            <div class="error-message" id="contact-email-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-messenger" id="curator-contact-messenger">контактный мессенджер *</label>
+                            <input type="text" id="contact-messenger" required>
+                            <div class="error-message" id="contact-messenger-error"></div>
+                        </div>
+                        <button type="submit" class="action-button" id="curator-submit-platform">Отправить</button>
+                    </form>
+                </div>
+                <div id="curator-pending" style="display: none;">
+                    <p id="curator-pending-message">Мы приняли Вашу заявку в обработку. В ближайшее время с Вами свяжутся для согласования деталей проведения ЭкоДиктанта на Вашей площадке.</p>
+                </div>
+            </div>
+        </div>
+        <button class="action-button" id="edit-profile-btn">РЕДАКТИРОВАТЬ</button>
+        <button class="action-button" id="save-profile-btn" style="display:none;">СОХРАНИТЬ</button>
+    </div>
+
+    <div id="change-password-modal" class="modal">
+        <div class="modal-content change-password-modal-content">
+            <span class="close" id="change-password-modal-close-btn">&times;</span>
+            <div class="modal-header">
+                <h2 id="change-password-title">Смена пароля</h2>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="old-password" id="old-password-label">Текущий пароль</label>
+                    <input type="password" id="old-password" required>
+                    <div class="error-message" id="old-password-error"></div>
+                </div>
+                <div class="form-group">
+                    <label for="new-password" id="new-password-label">Новый пароль</label>
+                    <input type="password" id="new-password" required>
+                    <div class="error-message" id="new-password-error"></div>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-new-password" id="confirm-new-password-label">Подтвердите новый пароль</label>
+                    <input type="password" id="confirm-new-password" required>
+                    <div class="error-message" id="confirm-new-password-error"></div>
+                </div>
+                <button type="button" class="action-button" id="save-new-password-btn">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/ru.js"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/zh.js"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/ar.js"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/en.js"></script>
+    <script src="profile.js"></script>
+</body>
+</html>

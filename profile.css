@@ -1,0 +1,231 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+body {
+    background-color: #f5f5dc;
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+    transition: background-color 0.5s ease;
+    min-height: 100vh;
+}
+
+body.no-scroll {
+    overflow: hidden;
+}
+
+.profile-dashboard {
+    background-color: #fefefe;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+    width: 90%;
+    max-width: 1200px; /* Увеличено для трех столбцов */
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-dashboard h2 {
+    color: #000000;
+    margin-bottom: 20px;
+}
+
+.profile-layout {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 40px;
+    text-align: left;
+}
+
+.password-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border-right: 1px solid #ddd;
+    padding-right: 40px;
+}
+
+.profile-data-column {
+    flex: 1;
+}
+
+.curator-column {
+    flex: 1;
+    border-left: 1px solid #ddd;
+    padding-left: 40px;
+}
+
+.profile-group,
+.password-group {
+    margin-bottom: 15px;
+}
+
+.profile-group label,
+.password-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.profile-field {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #f0f0f0;
+    color: #555;
+    pointer-events: none;
+}
+
+.profile-field.editable {
+    background-color: #fff;
+    pointer-events: auto;
+    color: #333;
+    border-color: #000000;
+}
+
+.profile-dashboard .action-button {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    width: 90vw;
+    max-width: 450px;
+    max-height: 90vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.close {
+    color: #aaa;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+}
+
+h2 {
+    font-size: 24px;
+    margin: 0;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.action-button {
+    background-color: #000000;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.action-button:hover {
+    background-color: #3d4f21;
+}
+
+.change-password-modal-content {
+    max-width: 450px;
+}
+
+#curator-materials ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#curator-materials li {
+    margin-bottom: 10px;
+}
+
+#curator-pending-message {
+    color: #3d4f21;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    .profile-layout {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .password-column, .curator-column {
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+        padding-right: 0;
+        padding-bottom: 20px;
+        padding-left: 0;
+        border-left: none;
+    }
+    .profile-dashboard {
+        padding: 20px;
+    }
+    .modal-content {
+        padding: 15px;
+    }
+}

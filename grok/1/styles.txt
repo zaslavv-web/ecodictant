@@ -87,9 +87,10 @@ body.no-scroll {
     top: 0;
     width: 100%;
     height: 100%;
+    background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.4);
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 }
 
 .modal-content {
@@ -206,7 +207,7 @@ h2 {
     justify-content: center;
     gap: 20px;
     margin-top: 20px;
-    flex-wrap: wrap;
+    flex-wrap: wrap; 
 }
 
 .role-option {
@@ -268,6 +269,75 @@ h2 {
     margin-right: auto;
 }
 
+.profile-dashboard {
+    background-color: #fefefe;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+    width: 90%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-dashboard h2 {
+    color: #000000;
+    margin-bottom: 20px;
+}
+
+.profile-content {
+    width: 100%;
+}
+
+.profile-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.profile-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.profile-field {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #f0f0f0;
+    color: #555;
+    pointer-events: none;
+}
+
+.profile-field.editable {
+    background-color: #fff;
+    pointer-events: auto;
+    color: #333;
+    border-color: #000000;
+}
+
+.profile-dashboard .action-button {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.password-group {
+    margin-top: 30px;
+}
+
+
+.dashboard-box h2 {
+    color: #000000;
+    margin-bottom: 20px;
+}
+
 .documents-section {
     margin-top: 30px;
     text-align: left;
@@ -296,6 +366,7 @@ h2 {
     text-decoration: underline;
 }
 
+/* Стили для контейнера соглашения */
 .consent-container {
     margin-bottom: 15px;
     text-align: left;
@@ -316,11 +387,13 @@ h2 {
     text-decoration: none;
 }
 
+/* Стиль для модального окна с PDF */
 .pdf-modal-content {
     max-width: 800px;
     height: 80%;
 }
 
+/* Стили для чекбокса */
 .checkbox {
     display: flex;
     align-items: flex-start;
@@ -331,6 +404,7 @@ h2 {
     margin-top: 3px;
 }
 
+/* Стили для RTL языков (арабский) */
 [dir="rtl"] .language-options {
     flex-direction: row-reverse;
 }
@@ -349,11 +423,7 @@ h2 {
     text-align: right;
 }
 
-.account-modal-content {
-    max-width: 400px;
-    padding: 40px;
-}
-
+/* Адаптивность для мобильных устройств */
 @media (max-width: 768px) {
     body {
         padding: 10px;
@@ -376,7 +446,7 @@ h2 {
     .modal-content {
         padding: 15px;
     }
-    .login-modal-content, .secret-key-modal-content, .account-modal-content {
+    .login-modal-content, .secret-key-modal-content {
         padding: 20px;
     }
     .login-image {

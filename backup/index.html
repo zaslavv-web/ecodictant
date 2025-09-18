@@ -13,6 +13,7 @@
             <img src="ecotalk_logo.png" alt="Экотолк Logo" class="logo">
         </div>
         <div class="welcome" id="welcome">
+            <!-- Здесь будет текст приветствия на выбранном языке -->
         </div>
         <div class="language-options-container">
             <div class="language-options">
@@ -36,6 +37,43 @@
         </div>
     </div>
 
+    <!-- Модальное окно: Есть ли аккаунт? -->
+    <div id="account-modal" class="modal">
+        <div class="modal-content account-modal-content">
+            <span class="close" id="account-modal-close-btn">&times;</span>
+            <div class="modal-header">
+                <h2 id="account-title"></h2>
+            </div>
+            <div class="modal-body">
+                <button type="button" class="action-button" id="account-yes-button"></button>
+                <button type="button" class="action-button" id="account-no-button"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно логина -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content login-modal-content">
+            <span class="close" id="login-modal-close-btn">&times;</span>
+            <div class="login-header">
+                <img src="hello.png" alt="Hello" class="login-image">
+                <h2 id="login-title"></h2>
+            </div>
+            <div class="login-body">
+                <div class="form-group">
+                    <input type="email" id="login-email" required placeholder="Электронная почта">
+                </div>
+                <div class="form-group">
+                    <input type="password" id="login-password" required placeholder="Пароль">
+                </div>
+                <div class="error-message" id="login-error"></div>
+                <button type="button" class="action-button" id="login-button"></button>
+                <button type="button" class="link-button" id="register-link-from-login"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно выбора роли -->
     <div id="role-modal" class="modal">
         <div class="modal-content role-modal-content">
             <span class="close" id="role-modal-close-btn">&times;</span>
@@ -48,7 +86,7 @@
                         <img src="kurator.png" alt="Curator">
                         <span id="curator-label">КУРАТОР</span>
                     </div>
-                    <div class="role-option" id="role-volunteer-btn">
+                    <div class="role-option" id="role-volunteer-btn" style="display: none;">
                         <img src="volunter.png" alt="Volunteer">
                         <span id="volunteer-label">ВОЛОНТЕР</span>
                     </div>
@@ -61,6 +99,26 @@
         </div>
     </div>
 
+    <!-- Модальное окно секретного кода -->
+    <div id="secret-key-modal" class="modal">
+        <div class="modal-content secret-key-modal-content">
+            <span class="close" id="secret-key-modal-close-btn">&times;</span>
+            <div class="modal-header">
+                <h2 id="secret-key-title"></h2>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="secretCode" id="secret-code-label"></label>
+                    <input type="text" id="secretCode" maxlength="4" placeholder="Введите код">
+                    <div class="error-message" id="secret-code-error"></div>
+                    <button type="button" class="link-button" id="no-key-button"></button>
+                </div>
+                <button type="button" class="submit-button" id="submit-key-button"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно регистрации -->
     <div id="registration-modal" class="modal">
         <div class="modal-content registration-modal-content">
             <span class="close" id="registration-modal-close-btn">&times;</span>
@@ -90,236 +148,95 @@
                         <div class="error-message" id="phone-error"></div>
                     </div>
                     <div class="form-group">
+                        <label for="email" id="email-label">Электронная почта *</label>
+                        <input type="email" id="email" required>
+                        <div class="error-message" id="email-error"></div>
+                    </div>
+                    <div class="form-group">
                         <label for="messenger" id="messenger-label">Мессенджер</label>
-                        <input type="text" id="messenger" placeholder="Например: Telegram, WhatsApp и т.д.">
+                        <input type="text" id="messenger">
+                        <div class="error-message" id="messenger-error"></div>
                     </div>
-                    <div class="form-group" id="curator-code-group" style="display: none;">
-                        <label for="secretCode" id="secret-code-label">Секретный код</label>
-                        <input type="text" id="secretCode" maxlength="4" placeholder="Введите код">
-                        <div class="error-message" id="secret-code-error"></div>
+                    <div class="form-group">
+                        <label for="password" id="password-label">Пароль</label>
+                        <input type="password" id="password">
+                        <div class="error-message" id="password-error"></div>
                     </div>
-                    <button type="button" class="submit-button" id="register-button">ЗАРЕГИСТРИРОВАТЬСЯ</button>
+                    <div class="form-group">
+                        <label for="confirm-password" id="confirm-password-label">Подтвердите пароль</label>
+                        <input type="password" id="confirm-password">
+                        <div class="error-message" id="confirm-password-error"></div>
+                    </div>
+                    <div class="consent-container">
+                        <div class="checkbox">
+                            <input type="checkbox" id="privacyPolicyConsent" required>
+                            <label for="privacyPolicyConsent" id="consent-text"></label>
+                        </div>
+                        <div class="error-message" id="consent-error"></div>
+                    </div>
+                    <button type="submit" class="action-button" id="register-button"></button>
                 </form>
             </div>
         </div>
     </div>
-    <script src="locals.js"></script>
-    <script src="curators.js"></script>
-    <script src="volunteers.js"></script>
-    <script src="students.js"></script>
+
+    <!-- Модальное окно ожидания для куратора -->
+    <div id="curator-wait-modal" class="modal">
+        <div class="modal-content curator-wait-screen">
+            <span class="close" id="curator-wait-modal-close-btn">&times;</span>
+            <img src="ecotalk_logo.png" alt="Экотолк Logo" class="curator-success-logo">
+            <h2 id="curator-wait-message"></h2>
+            <p id="curator-wait-details"></p>
+        </div>
+    </div>
+
+    <!-- Модальное окно для PDF политики -->
+    <div id="policy-pdf-modal" class="modal">
+        <div class="modal-content pdf-modal-content">
+            <span class="close" id="policy-pdf-modal-close-btn">&times;</span>
+            <iframe id="policy-pdf-iframe" src="" width="100%" height="600px" frameborder="0"></iframe>
+        </div>
+    </div>
+
+    <!-- Дашборд (не используется в index, но оставлен для совместимости) -->
+    <div id="dashboard" class="dashboard-box" style="display: none;">
+        <span class="close" id="dashboard-close-btn">&times;</span>
+        <h2 id="dashboard-title"></h2>
+        <div class="dashboard-content">
+            <div id="participant-dashboard" style="display: none;">
+                <h3 id="welcome-user"></h3>
+                <p id="participant-message"></p>
+                <button class="action-button" id="start-dictant"></button>
+            </div>
+            <div id="curator-dashboard" style="display: none;">
+                <h3 id="welcome-curator"></h3>
+                <div class="documents-section">
+                    <p id="curator-message"></p>
+                    <h3 id="documents-title"></h3>
+                    <ul id="documents-list">
+                        <li><a href="doc1.pdf" class="download-link">Документ 1</a></li>
+                        <li><a href="doc2.docx" class="download-link">Документ 2</a></li>
+                    </ul>
+                    <h3 id="materials-title"></h3>
+                    <ul id="materials-list">
+                        <li><a href="material1.pdf" class="download-link">Материал 1</a></li>
+                        <li><a href="material2.pptx" class="download-link">Материал 2</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div id="volunteer-dashboard" style="display: none;">
+                <h3 id="welcome-volunteer"></h3>
+                <p id="volunteer-message"></p>
+                <button class="action-button" id="organize-event"></button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ru.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/zh.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ar.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/default.js"></script>
-
-    <script>
-        let currentLang = 'ru';
-        let currentRole = '';
-        let datePickerInstance;
-
-        function setLanguage(lang) {
-            document.documentElement.lang = lang;
-            document.documentElement.dir = translations[lang].dir || 'ltr';
-            document.getElementById('welcome').innerHTML = translations[lang].welcome;
-            document.getElementById('role-welcome-text').textContent = translations[lang].role_welcome;
-            document.getElementById('curator-label').textContent = translations[lang].curator;
-            document.getElementById('volunteer-label').textContent = translations[lang].volunteer;
-            document.getElementById('participant-label').textContent = translations[lang].participant;
-            document.getElementById('registration-title').textContent = translations[lang].registration_title;
-            document.getElementById('name-label').textContent = translations[lang].name + ' *';
-            document.getElementById('surname-label').textContent = translations[lang].surname + ' *';
-            document.getElementById('birthdate-label').textContent = translations[lang].birthdate + ' *';
-            document.getElementById('phone-label').textContent = translations[lang].phone + ' *';
-            document.getElementById('messenger-label').textContent = translations[lang].messenger;
-            document.getElementById('secret-code-label').textContent = translations[lang].secret_code;
-            document.getElementById('register-button').textContent = translations[lang].register_button;
-
-            // Обновляем язык flatpickr
-            const localeMap = {
-                'ru': 'ru',
-                'zh': 'zh',
-                'ar': 'ar',
-                'en': 'default'
-            };
-
-            if (datePickerInstance) {
-                datePickerInstance.set('locale', localeMap[lang]);
-            }
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        function selectLanguage(lang) {
-            currentLang = lang;
-            setLanguage(lang);
-            document.getElementById('role-modal').style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function selectRole(role) {
-            currentRole = role;
-            document.getElementById('role-modal').style.display = 'none';
-            document.getElementById('registration-modal').style.display = 'block';
-            document.getElementById('curator-code-group').style.display = currentRole === 'curator' ? 'block' : 'none';
-            setLanguage(currentLang);
-        }
-
-        function validateName(input) {
-            const errorElement = document.getElementById(input.id + '-error');
-            const value = input.value.trim();
-            if (value === '') {
-                errorElement.textContent = translations[currentLang].fill_required;
-                input.classList.add('invalid');
-                return false;
-            } else if (!/^[a-zA-Zа-яА-ЯёЁ\s\-]+$/.test(value)) {
-                errorElement.textContent = translations[currentLang].name_error;
-                input.classList.add('invalid');
-                return false;
-            } else {
-                errorElement.textContent = '';
-                input.classList.remove('invalid');
-                return true;
-            }
-        }
-
-        function validateBirthdate(input) {
-            const errorElement = document.getElementById('birthdate-error');
-            const birthdate = new Date(input.value);
-            const maxDate = new Date('2020-12-31');
-            const minDate = new Date('1900-01-01');
-            if (input.value === '') {
-                errorElement.textContent = translations[currentLang].fill_required;
-                input.classList.add('invalid');
-                return false;
-            } else if (birthdate > maxDate || birthdate < minDate) {
-                errorElement.textContent = translations[currentLang].birthdate_range_error;
-                input.classList.add('invalid');
-                return false;
-            } else {
-                errorElement.textContent = '';
-                input.classList.remove('invalid');
-                return true;
-            }
-        }
-
-        function validatePhone(input) {
-            const errorElement = document.getElementById('phone-error');
-            const value = input.value.trim();
-            if (value === '') {
-                errorElement.textContent = translations[currentLang].fill_required;
-                input.classList.add('invalid');
-                return false;
-            } else if (!/^\+?[\d\s\(\)\-]{10,15}$/.test(value)) {
-                errorElement.textContent = translations[currentLang].invalid_phone;
-                input.classList.add('invalid');
-                return false;
-            } else {
-                errorElement.textContent = '';
-                input.classList.remove('invalid');
-                return true;
-            }
-        }
-
-        function registerUser() {
-            let isValid = true;
-            isValid = validateName(document.getElementById('name')) && isValid;
-            isValid = validateName(document.getElementById('surname')) && isValid;
-            isValid = validateBirthdate(document.getElementById('birthdate')) && isValid;
-            isValid = validatePhone(document.getElementById('phone')) && isValid;
-
-            if (!isValid) return;
-
-            const name = document.getElementById('name').value.trim();
-            const surname = document.getElementById('surname').value.trim();
-            const birthdate = document.getElementById('birthdate').value;
-            const phone = document.getElementById('phone').value.trim();
-            const messenger = document.getElementById('messenger').value.trim();
-            const secretCode = document.getElementById('secretCode').value.trim();
-
-            const user = { name, surname, birthdate, phone, messenger, lang: currentLang };
-
-            const birthYear = new Date(birthdate).getFullYear();
-            const currentYear = new Date().getFullYear();
-            const isAdult = (currentYear - birthYear) >= 18;
-
-            if (currentRole === 'curator') {
-                const existingCurator = curators.find(c => c.code === secretCode);
-                if (existingCurator) {
-                    localStorage.setItem('currentUser', JSON.stringify({ role: 'curator', status: 'ready', data: user }));
-                    window.location.href = 'kurator_ready.html';
-                } else if (secretCode === '') {
-                     localStorage.setItem('currentUser', JSON.stringify({ role: 'curator', status: 'waiting', data: user }));
-                     window.location.href = 'kurator_waiting.html';
-                } else {
-                    document.getElementById('secret-code-error').textContent = translations[currentLang].invalid_code;
-                    document.getElementById('secretCode').classList.add('invalid');
-                }
-            } else if (currentRole === 'volunteer') {
-                volunteers.push(user);
-                localStorage.setItem('currentUser', JSON.stringify({ role: 'volunteer', data: user }));
-                window.location.href = 'volunteer.html';
-            } else if (currentRole === 'participant') {
-                if (isAdult) {
-                    students.push(user);
-                    localStorage.setItem('currentUser', JSON.stringify({ role: 'student', age: 'adult', data: user }));
-                    window.location.href = 'student_adult.html';
-                } else {
-                    students.push(user);
-                    localStorage.setItem('currentUser', JSON.stringify({ role: 'student', age: 'child', data: user }));
-                    window.location.href = 'student_child.html';
-                }
-            }
-        }
-
-        function initEventListeners() {
-            document.getElementById('lang-ru-button').addEventListener('click', () => selectLanguage('ru'));
-            document.getElementById('lang-zh-button').addEventListener('click', () => selectLanguage('zh'));
-            document.getElementById('lang-ar-button').addEventListener('click', () => selectLanguage('ar'));
-            document.getElementById('lang-en-button').addEventListener('click', () => selectLanguage('en'));
-            document.getElementById('role-modal-close-btn').addEventListener('click', () => closeModal('role-modal'));
-            document.getElementById('registration-modal-close-btn').addEventListener('click', () => closeModal('registration-modal'));
-            document.getElementById('role-curator-btn').addEventListener('click', () => selectRole('curator'));
-            document.getElementById('role-volunteer-btn').addEventListener('click', () => selectRole('volunteer'));
-            document.getElementById('role-participant-btn').addEventListener('click', () => selectRole('participant'));
-            document.getElementById('register-button').addEventListener('click', registerUser);
-            document.getElementById('name').addEventListener('input', () => validateName(document.getElementById('name')));
-            document.getElementById('surname').addEventListener('input', () => validateName(document.getElementById('surname')));
-            document.getElementById('birthdate').addEventListener('change', () => validateBirthdate(document.getElementById('birthdate')));
-            document.getElementById('phone').addEventListener('input', () => validatePhone(document.getElementById('phone')));
-        }
-
-        window.onload = function() {
-            // Инициализируем flatpickr
-            datePickerInstance = flatpickr("#birthdate", {
-                dateFormat: "Y-m-d",
-                locale: "ru"
-            });
-            setLanguage('ru');
-            document.querySelectorAll('.lang-image').forEach(img => {
-                img.addEventListener('mouseover', () => {
-                    const lang = img.parentElement.dataset.lang;
-                    document.getElementById('welcome').innerHTML = translations[lang].welcome;
-                });
-                img.addEventListener('mouseout', () => {
-                    document.getElementById('welcome').innerHTML = translations['ru'].welcome;
-                });
-            });
-            document.getElementById('role-modal').addEventListener('click', function(event) {
-                if (event.target === this) {
-                    closeModal('role-modal');
-                }
-            });
-            document.getElementById('registration-modal').addEventListener('click', function(event) {
-                if (event.target === this) {
-                    closeModal('registration-modal');
-                }
-            });
-            initEventListeners();
-        };
-    </script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/ru.js"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/zh.js"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/ar.js"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/default.js"></script> <!-- Для английского -->
+    <script src="locals.js"></script>
 </body>
 </html>

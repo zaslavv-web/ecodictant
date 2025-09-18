@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Экодиктант</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ru.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/zh.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ar.js"></script>
+</head>
+<body>
+    <div class="header">
+        <img src="logo.png" alt="Logo" class="logo">
+    </div>
+
+    <div id="welcome" class="welcome">
+        <strong>ДОБРО ПОЖАЛОВАТЬ НА ЭКОДИКТАНТ. <br> ДЛЯ НАЧАЛА, ДАВАЙТЕ, ОПРЕДЕЛИМСЯ НА КАКОМ ЯЗЫКЕ ВАМ УДОБНО ОБЩАТЬСЯ</strong>
+    </div>
+
+    <div class="language-options-container">
+        <div class="language-options">
+            <div class="card" onclick="setLanguage('ru')">
+                <img src="ru_image.png" alt="Русский" class="lang-image">
+                <button class="button">ЗАРЕГИСТРИРОВАТЬСЯ</button>
+            </div>
+            <div class="card" onclick="setLanguage('zh')">
+                <img src="zh_image.png" alt="中文" class="lang-image">
+                <button class="button">注册账号</button>
+            </div>
+            <div class="card" onclick="setLanguage('ar')">
+                <img src="ar_image.png" alt="عربي" class="lang-image">
+                <button class="button">تسجيل</button>
+            </div>
+            <div class="card" onclick="setLanguage('en')">
+                <img src="en_image.png" alt="English" class="lang-image">
+                <button class="button">SIGN IN</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модал для выбора роли -->
+    <div id="role-modal" class="modal">
+        <div class="modal-content role-modal-content">
+            <span class="close" onclick="closeModal('role-modal')">&times;</span>
+            <div class="modal-header">
+                <h2 id="role-welcome">ТЕПЕРЬ ДАВАЙТЕ ОПРЕДЕЛИМ, КАКУЮ РОЛЬ ВЫ ХОТИТЕ ЗАНЯТЬ В НАШЕМ ПРОЕКТЕ</h2>
+            </div>
+            <div class="modal-body">
+                <div class="role-options">
+                    <div class="role-option" onclick="selectRole('curator')">
+                        <img src="curator_icon.png" alt="Куратор">
+                        <span id="curator-label">КУРАТОР</span>
+                    </div>
+                    <div class="role-option" onclick="selectRole('volunteer')">
+                        <img src="volunteer_icon.png" alt="Волонтер">
+                        <span id="volunteer-label">ВОЛОНТЕР</span>
+                    </div>
+                    <div class="role-option" onclick="selectRole('participant')">
+                        <img src="participant_icon.png" alt="Участник">
+                        <span id="participant-label">УЧАСТНИК</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модал для секретного кода (только куратор) -->
+    <div id="secret-code-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('secret-code-modal')">&times;</span>
+            <h2 id="secret-code-title">Введите секретный код</h2>
+            <form id="secret-code-form">
+                <div class="form-group">
+                    <label for="secret-code" id="secret-code-label">Секретный код для подтверждения роли куратора *</label>
+                    <input type="text" id="secret-code" required>
+                    <div class="error-message" id="secret-code-error"></div>
+                </div>
+                <button type="submit" class="action-button" id="submit-key">Отправить</button>
+                <button type="button" class="link-button" id="no-secret-key" onclick="noSecretKey()">У меня нет кода</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Модал для регистрации -->
+    <div id="registration-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('registration-modal')">&times;</span>
+            <h2 id="registration-title">РЕГИСТРАЦИЯ</h2>
+            <form id="registration-form">
+                <div class="form-group">
+                    <label for="name" id="name-label">Имя *</label>
+                    <input type="text" id="name" required>
+                    <div class="error-message" id="name-error"></div>
+                </div>
+                <div class="form-group">
+                    <label for="surname" id="surname-label">Фамилия *</label>
+                    <input type="text" id="surname" required>
+                    <div class="error-message" id="surname-error"></div>
+                </div>
+                <div class="form-group">
+                    <label for="birthdate" id="birthdate-label">Дата рождения *</label>
+                    <input type="text" id="birthdate" required>
+                    <div class="error-message" id="birthdate-error"></div>
+                </div>
+                <div class="form-group">
+                    <label for="phone" id="phone-label">Телефон *</label>
+                    <input type="tel" id="phone" required>
+                    <div class="error-message" id="phone-error"></div>
+                </div>
+                <div class="form-group">
+                    <label for="email" id="email-label">Электронная почта *</label>
+                    <input type="email" id="email" required>
+                    <div class="error-message" id="email-error"></div>
+                </div>
+                <div class="form-group">
+                    <label for="messenger" id="messenger-label">Мессенджер</label>
+                    <input type="text" id="messenger">
+                </div>
+                <button type="submit" class="action-button" id="register-button">ЗАРЕГИСТРИРОВАТЬСЯ</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Дашборд (личный кабинет) -->
+    <div id="dashboard" class="dashboard-box" style="display: none;">
+        <h2 id="dashboard-title">Личный кабинет</h2>
+        <p id="welcome-user"></p>
+        <div id="role-content"></div>
+        <button id="logout-button" class="action-button" onclick="logout()">Выйти</button>
+    </div>
+
+    <script src="locals.js"></script>
+</body>
+</html>
